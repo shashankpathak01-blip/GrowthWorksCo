@@ -1,1642 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Growth Works Co — We Find What's Holding Back Your Growth</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Growth Works Co — Growth. Revenue. Scale.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --obsidian: #0C0C0E;
-    --obsidian-2: #111115;
-    --obsidian-3: #18181F;
-    --border: rgba(255,255,255,0.07);
-    --border-bright: rgba(255,255,255,0.14);
-    --gold: #C8A96E;
-    --gold-light: #E2C99A;
-    --gold-dim: rgba(200,169,110,0.15);
-    --cream: #F4EFE6;
-    --cream-dim: rgba(244,239,230,0.6);
-    --cream-muted: rgba(244,239,230,0.35);
-    --accent: #4A7C6F;
-    --accent-bright: #5A9E8E;
-    --text: #E8E3DA;
-    --muted: rgba(232,227,218,0.45);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--obsidian);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 8px; height: 8px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 36px; height: 36px;
-    border: 1px solid rgba(200,169,110,0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.18s ease;
-  }
-
-  /* Noise texture overlay */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
-
-  /* ─── NAV ─── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 500;
-    padding: 28px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    backdrop-filter: blur(12px);
-    background: rgba(12,12,14,0.7);
-    border-bottom: 1px solid var(--border);
-    transition: padding 0.3s ease;
-  }
-  nav.scrolled { padding: 18px 60px; }
-
-  .logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    color: var(--cream);
-    text-decoration: none;
-  }
-  .logo span { color: var(--gold); }
-
-  .nav-links {
-    display: flex;
-    gap: 44px;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--cream-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-    cursor: none;
-  }
-  .nav-links a:hover { color: var(--gold); }
-
-  .nav-cta {
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 11px 24px;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    background: transparent;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    cursor: none;
-  }
-  .nav-cta:hover {
-    background: var(--gold);
-    color: var(--obsidian);
-  }
-
-  /* ─── HERO ─── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 60% at 70% 40%, rgba(74,124,111,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(200,169,110,0.06) 0%, transparent 55%);
-  }
-
-  .hero-grid-lines {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-  }
-
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 160px 60px 80px 60px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 40px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.2s forwards;
-  }
-  .hero-eyebrow-line {
-    width: 40px;
-    height: 1px;
-    background: var(--gold);
-  }
-  .hero-eyebrow span {
-    font-size: 0.68rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .hero-headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.2rem, 5.5vw, 5.2rem);
-    font-weight: 300;
-    line-height: 1.08;
-    color: var(--cream);
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.9s ease 0.35s forwards;
-  }
-  .hero-headline em {
-    font-style: italic;
-    color: var(--gold-light);
-  }
-
-  .hero-sub {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: var(--cream-dim);
-    max-width: 420px;
-    margin-bottom: 56px;
-    opacity: 0;
-    animation: fadeUp 0.9s ease 0.5s forwards;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    opacity: 0;
-    animation: fadeUp 0.9s ease 0.65s forwards;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 36px;
-    background: var(--gold);
-    color: var(--obsidian);
-    font-size: 0.78rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.25s ease;
-    cursor: none;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.12);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-  .btn-primary:hover::after { transform: translateX(0); }
-  .btn-primary:hover { background: var(--gold-light); }
-
-  .btn-ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 28px;
-    border: 1px solid var(--border-bright);
-    color: var(--cream-dim);
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    cursor: none;
-  }
-  .btn-ghost:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-
-  .hero-right {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 160px 60px 80px 0;
-    z-index: 2;
-    opacity: 0;
-    animation: fadeIn 1.2s ease 0.7s forwards;
-  }
-
-  .hero-card {
-    background: var(--obsidian-3);
-    border: 1px solid var(--border);
-    padding: 40px;
-    width: 100%;
-    max-width: 400px;
-    position: relative;
-  }
-  .hero-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--accent));
-  }
-
-  .hero-card-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 28px;
-  }
-
-  .metric-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .metric-row:last-of-type { border-bottom: none; }
-
-  .metric-label {
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-  }
-  .metric-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 300;
-    color: var(--cream);
-  }
-  .metric-value.up { color: var(--accent-bright); }
-  .metric-delta {
-    font-size: 0.68rem;
-    font-family: 'DM Mono', monospace;
-    color: var(--accent-bright);
-    margin-left: 8px;
-  }
-
-  .hero-card-footer {
-    margin-top: 28px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-bright); animation: pulse 2s infinite; }
-  .hero-card-footer span { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; }
-
-  /* ─── MARQUEE ─── */
-  .marquee-section {
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 0;
-    overflow: hidden;
-    background: var(--obsidian-2);
-  }
-  .marquee-track {
-    display: flex;
-    gap: 0;
-    animation: marquee 30s linear infinite;
-    width: max-content;
-  }
-  .marquee-item {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    padding: 0 48px;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  .marquee-item span { color: var(--gold); }
-
-  /* ─── SECTION COMMONS ─── */
-  section { padding: 120px 60px; }
-
-  .section-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 20px;
-  }
-  .section-eyebrow-line { width: 30px; height: 1px; background: var(--gold); }
-  .section-eyebrow span {
-    font-size: 0.64rem;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.4rem, 4vw, 3.8rem);
-    font-weight: 300;
-    line-height: 1.12;
-    color: var(--cream);
-    margin-bottom: 20px;
-  }
-  .section-title em { font-style: italic; color: var(--gold-light); }
-
-  .section-desc {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: var(--cream-dim);
-    max-width: 520px;
-  }
-
-  /* ─── SERVICES ─── */
-  .services-section { background: var(--obsidian-2); }
-
-  .services-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    margin-bottom: 80px;
-    align-items: end;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    background: var(--border);
-  }
-
-  .service-card {
-    background: var(--obsidian-2);
-    padding: 52px 48px;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s ease;
-    cursor: none;
-  }
-  .service-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 2px;
-    height: 0;
-    background: var(--gold);
-    transition: height 0.4s ease;
-  }
-  .service-card:hover { background: var(--obsidian-3); }
-  .service-card:hover::before { height: 100%; }
-
-  .service-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--gold);
-    letter-spacing: 0.14em;
-    margin-bottom: 28px;
-  }
-
-  .service-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
-    font-weight: 400;
-    color: var(--cream);
-    margin-bottom: 16px;
-    line-height: 1.2;
-  }
-
-  .service-desc {
-    font-size: 0.85rem;
-    line-height: 1.75;
-    color: var(--muted);
-    margin-bottom: 32px;
-  }
-
-  .service-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 36px;
-  }
-  .service-tag {
-    padding: 5px 12px;
-    border: 1px solid var(--border-bright);
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--cream-muted);
-  }
-
-  .service-deliverable {
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    color: var(--accent-bright);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .service-deliverable::before {
-    content: '';
-    width: 20px; height: 1px;
-    background: var(--accent-bright);
-  }
-
-  /* ─── PROCESS ─── */
-  .process-section { position: relative; }
-
-  .process-header {
-    max-width: 600px;
-    margin-bottom: 80px;
-  }
-
-  .process-steps {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    position: relative;
-  }
-  .process-steps::before {
-    content: '';
-    position: absolute;
-    top: 28px;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border-bright), var(--gold), var(--border-bright), transparent);
-  }
-
-  .process-step {
-    padding: 0 24px;
-    text-align: center;
-    position: relative;
-  }
-
-  .step-num {
-    width: 56px; height: 56px;
-    border: 1px solid var(--border-bright);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 32px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    color: var(--gold);
-    background: var(--obsidian);
-    position: relative;
-    z-index: 2;
-    transition: all 0.3s ease;
-  }
-  .process-step:hover .step-num {
-    background: var(--gold-dim);
-    border-color: var(--gold);
-  }
-
-  .step-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    font-weight: 400;
-    color: var(--cream);
-    margin-bottom: 12px;
-  }
-
-  .step-desc {
-    font-size: 0.78rem;
-    line-height: 1.7;
-    color: var(--muted);
-  }
-
-  /* ─── OUTCOMES ─── */
-  .outcomes-section { background: var(--obsidian-2); }
-
-  .outcomes-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
-    margin-top: 64px;
-  }
-
-  .outcome-card {
-    background: var(--obsidian-2);
-    padding: 52px 44px;
-    position: relative;
-    overflow: hidden;
-  }
-  .outcome-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
-  }
-
-  .outcome-industry {
-    font-size: 0.62rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 24px;
-  }
-
-  .outcome-findings {
-    list-style: none;
-    margin-bottom: 36px;
-  }
-  .outcome-findings li {
-    font-size: 0.83rem;
-    line-height: 1.6;
-    color: var(--cream-dim);
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .outcome-findings li::before {
-    content: '—';
-    color: var(--gold);
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .outcome-result {
-    background: var(--gold-dim);
-    border: 1px solid rgba(200,169,110,0.2);
-    padding: 20px 24px;
-  }
-  .outcome-result-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 8px;
-  }
-  .outcome-result-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    color: var(--cream);
-    font-style: italic;
-    line-height: 1.4;
-  }
-
-  /* ─── INDUSTRIES ─── */
-  .industries-section { overflow: hidden; }
-
-  .industries-inner {
-    display: grid;
-    grid-template-columns: 380px 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-
-  .industries-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin-top: 48px;
-  }
-
-  .industry-item {
-    padding: 22px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: none;
-    transition: padding 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .industry-item::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    height: 1px;
-    width: 0;
-    background: var(--gold);
-    transition: width 0.4s ease;
-  }
-  .industry-item:hover { padding-left: 12px; }
-  .industry-item:hover::before { width: 100%; }
-
-  .industry-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: var(--cream-dim);
-    transition: color 0.3s;
-  }
-  .industry-item:hover .industry-name { color: var(--cream); }
-
-  .industry-arrow {
-    font-size: 1rem;
-    color: var(--gold);
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: all 0.3s ease;
-  }
-  .industry-item:hover .industry-arrow { opacity: 1; transform: translateX(0); }
-
-  .industries-visual {
-    padding-top: 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: start;
-  }
-
-  .stat-block {
-    padding: 36px 32px;
-    border: 1px solid var(--border);
-    position: relative;
-    transition: border-color 0.3s;
-  }
-  .stat-block:hover { border-color: var(--border-bright); }
-  .stat-block-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3.2rem;
-    font-weight: 300;
-    color: var(--gold-light);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .stat-block-label {
-    font-size: 0.73rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-  .stat-block:nth-child(2) { margin-top: 40px; }
-  .stat-block:nth-child(4) { margin-top: 40px; }
-
-  /* ─── WHY ─── */
-  .why-section {
-    position: relative;
-    background: var(--obsidian-3);
-  }
-
-  .why-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1px;
-    background: var(--border);
-    margin-top: 64px;
-  }
-
-  .why-item {
-    background: var(--obsidian-3);
-    padding: 52px 44px;
-  }
-
-  .why-icon {
-    width: 48px; height: 48px;
-    border: 1px solid var(--border-bright);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 28px;
-    font-size: 1.2rem;
-  }
-
-  .why-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: var(--cream);
-    margin-bottom: 14px;
-  }
-
-  .why-desc {
-    font-size: 0.82rem;
-    line-height: 1.8;
-    color: var(--muted);
-  }
-
-  /* ─── FAQ ─── */
-  .faq-section { }
-
-  .faq-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px;
-    align-items: start;
-  }
-
-  .faq-list { margin-top: 48px; }
-
-  .faq-item {
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
-  }
-
-  .faq-q {
-    padding: 24px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: none;
-    font-size: 0.9rem;
-    color: var(--cream-dim);
-    transition: color 0.2s;
-    gap: 20px;
-  }
-  .faq-q:hover { color: var(--cream); }
-
-  .faq-plus {
-    width: 20px; height: 20px;
-    flex-shrink: 0;
-    position: relative;
-    transition: transform 0.3s ease;
-  }
-  .faq-plus::before, .faq-plus::after {
-    content: '';
-    position: absolute;
-    background: var(--gold);
-    transition: all 0.3s ease;
-  }
-  .faq-plus::before { width: 100%; height: 1px; top: 50%; left: 0; transform: translateY(-50%); }
-  .faq-plus::after { width: 1px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
-
-  .faq-item.open .faq-plus { transform: rotate(45deg); }
-
-  .faq-a {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.3s ease;
-    font-size: 0.83rem;
-    line-height: 1.8;
-    color: var(--muted);
-  }
-  .faq-item.open .faq-a {
-    max-height: 200px;
-    padding-bottom: 24px;
-  }
-
-  .faq-visual {
-    padding-top: 80px;
-    position: sticky;
-    top: 120px;
-  }
-  .faq-card {
-    background: var(--obsidian-3);
-    border: 1px solid var(--border);
-    padding: 48px;
-    position: relative;
-  }
-  .faq-card::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 60px; height: 60px;
-    border-top: 1px solid var(--gold);
-    border-right: 1px solid var(--gold);
-  }
-  .faq-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 60px; height: 60px;
-    border-bottom: 1px solid var(--gold);
-    border-left: 1px solid var(--gold);
-  }
-
-  .faq-card-eyebrow {
-    font-size: 0.62rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 20px;
-  }
-
-  .faq-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem;
-    font-weight: 300;
-    color: var(--cream);
-    line-height: 1.2;
-    margin-bottom: 20px;
-  }
-
-  .faq-card p {
-    font-size: 0.85rem;
-    line-height: 1.75;
-    color: var(--cream-dim);
-    margin-bottom: 36px;
-  }
-
-  .timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: 36px;
-  }
-  .timeline-item {
-    display: flex;
-    gap: 16px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .timeline-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--gold);
-    width: 20px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .timeline-text {
-    font-size: 0.78rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  /* ─── CTA ─── */
-  .cta-section {
-    background: var(--obsidian-2);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .cta-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 5vw, 5rem);
-    font-weight: 300;
-    color: var(--cream);
-    line-height: 1.1;
-    margin-bottom: 24px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-  }
-  .cta-title em { font-style: italic; color: var(--gold-light); }
-
-  .cta-sub {
-    font-size: 0.95rem;
-    color: var(--cream-dim);
-    margin-bottom: 48px;
-    max-width: 420px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
-  }
-
-  .cta-actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    position: relative;
-  }
-
-  .cta-contact {
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    margin-top: 36px;
-  }
-  .cta-contact a {
-    color: var(--gold);
-    text-decoration: none;
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--obsidian);
-    border-top: 1px solid var(--border);
-    padding: 60px 60px 40px;
-  }
-
-  .footer-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 60px;
-  }
-
-  .footer-brand p {
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-top: 12px;
-    max-width: 260px;
-    line-height: 1.6;
-  }
-
-  .footer-links h4 {
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-    margin-bottom: 20px;
-  }
-  .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .footer-links a {
-    font-size: 0.8rem;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-    cursor: none;
-  }
-  .footer-links a:hover { color: var(--cream); }
-
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 28px;
-    border-top: 1px solid var(--border);
-  }
-  .footer-bottom p {
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-  }
-  .footer-bottom a { color: var(--gold); text-decoration: none; cursor: none; }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(28px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(36px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ─── SCROLLBAR ─── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--obsidian); }
-  ::-webkit-scrollbar-thumb { background: var(--border-bright); }
-  ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gold:       #B8973A;
+  --gold-light: #D4AF5A;
+  --gold-pale:  #F0E4C0;
+  --gold-dim:   #7A6228;
+  --charcoal:   #1E1E22;
+  --charcoal-2: #2A2A2E;
+  --charcoal-3: #35353A;
+  --off-white:  #FAF9F6;
+  --white:      #FFFFFF;
+  --gray-light: #F3F2EF;
+  --gray-mid:   #C8C4BC;
+  --gray-text:  #6B6760;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Inter', sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);color:var(--charcoal);background:var(--white);line-height:1.6;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,255,255,0.97);
+  border-bottom:1px solid rgba(184,151,58,0.2);
+  backdrop-filter:blur(10px);
+  padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  height:70px;
+}
+.nav-logo{display:flex;align-items:center;gap:14px;}
+.nav-logo-img{
+  width:44px;height:44px;
+  background:var(--charcoal);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:22px;font-weight:700;
+  color:var(--gold);letter-spacing:-1px;
+  flex-shrink:0;
+}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1.15;}
+.nav-logo-text span:first-child{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--charcoal);letter-spacing:0.5px;}
+.nav-logo-text span:last-child{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:3px;text-transform:uppercase;}
+.nav-links{display:flex;gap:30px;align-items:center;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--gray-text);text-decoration:none;letter-spacing:0.3px;transition:color 0.2s;}
+.nav-links a:hover{color:var(--charcoal);}
+.nav-cta{
+  background:var(--charcoal);color:var(--gold);
+  padding:10px 22px;border-radius:4px;
+  font-size:13px;font-weight:600;text-decoration:none;
+  letter-spacing:0.4px;border:1px solid var(--charcoal);
+  transition:background 0.2s,color 0.2s;
+}
+.nav-cta:hover{background:var(--gold);color:var(--charcoal);}
+
+/* HERO */
+.hero{
+  margin-top:70px;
+  background:var(--charcoal);
+  padding:110px 5% 100px;
+  position:relative;overflow:hidden;
+}
+.hero-grid-line{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background-image:
+    linear-gradient(rgba(184,151,58,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184,151,58,0.04) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.hero-accent{
+  position:absolute;bottom:-2px;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.hero-inner{max-width:800px;position:relative;z-index:1;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(184,151,58,0.35);
+  color:var(--gold-light);font-size:11px;font-weight:600;
+  padding:6px 16px;border-radius:2px;letter-spacing:2.5px;
+  text-transform:uppercase;margin-bottom:30px;
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(42px,6vw,74px);
+  font-weight:700;line-height:1.05;
+  color:var(--white);letter-spacing:-0.5px;
+  margin-bottom:24px;
+}
+.hero h1 em{color:var(--gold);font-style:normal;}
+.hero p{
+  font-size:17px;color:rgba(255,255,255,0.6);
+  max-width:520px;line-height:1.75;margin-bottom:44px;font-weight:400;
+}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+.btn-gold{
+  background:var(--gold);color:var(--charcoal);
+  padding:14px 30px;border-radius:4px;
+  font-size:14px;font-weight:700;text-decoration:none;
+  letter-spacing:0.3px;transition:background 0.2s,transform 0.15s;display:inline-block;
+}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-1px);}
+.btn-outline{
+  color:rgba(255,255,255,0.7);font-size:14px;font-weight:500;
+  text-decoration:none;padding:14px 4px;
+  border-bottom:1px solid rgba(255,255,255,0.25);
+  transition:color 0.2s,border-color 0.2s;letter-spacing:0.2px;
+}
+.btn-outline:hover{color:var(--gold);border-color:var(--gold);}
+.hero-divider{
+  margin-top:72px;padding-top:44px;
+  border-top:1px solid rgba(184,151,58,0.2);
+  display:flex;gap:52px;flex-wrap:wrap;
+}
+.stat-num{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--gold);letter-spacing:-1px;display:block;}
+.stat-label{font-size:12px;color:rgba(255,255,255,0.4);font-weight:500;letter-spacing:0.5px;margin-top:2px;display:block;}
+
+/* SECTION BASE */
+section{padding:96px 5%;}
+.section-label{
+  font-size:10px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:12px;
+}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(32px,4vw,50px);
+  font-weight:700;line-height:1.1;
+  color:var(--charcoal);letter-spacing:-0.3px;margin-bottom:14px;
+}
+.section-sub{
+  font-size:16px;color:var(--gray-text);
+  max-width:520px;line-height:1.75;margin-bottom:56px;
+}
+.gold-rule{width:40px;height:2px;background:var(--gold);margin-bottom:28px;border-radius:1px;}
+
+/* SERVICES */
+.services{background:var(--off-white);}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1px;background:rgba(184,151,58,0.15);
+  border:1px solid rgba(184,151,58,0.15);border-radius:4px;overflow:hidden;
+}
+.service-card{
+  background:var(--white);padding:36px 32px;
+  transition:background 0.25s;
+}
+.service-card:hover{background:var(--charcoal);}
+.service-card:hover h3,.service-card:hover p{color:var(--white);}
+.service-card:hover .s-icon{background:rgba(184,151,58,0.15);border-color:rgba(184,151,58,0.3);}
+.service-card:hover .s-icon svg{stroke:var(--gold);}
+.service-card:hover .tag{background:rgba(184,151,58,0.12);color:var(--gold-light);border-color:rgba(184,151,58,0.25);}
+.s-icon{
+  width:46px;height:46px;border-radius:4px;
+  background:var(--gray-light);border:1px solid rgba(184,151,58,0.2);
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  transition:background 0.25s,border-color 0.25s;
+}
+.s-icon svg{width:20px;height:20px;stroke:var(--gold-dim);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke 0.25s;}
+.service-card h3{font-size:15px;font-weight:700;color:var(--charcoal);margin-bottom:10px;transition:color 0.25s;}
+.service-card p{font-size:13.5px;color:var(--gray-text);line-height:1.7;transition:color 0.25s;}
+.service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+.tag{font-size:10px;font-weight:600;padding:4px 10px;border-radius:2px;background:var(--gray-light);color:var(--gold-dim);border:1px solid rgba(184,151,58,0.15);letter-spacing:0.5px;transition:background 0.25s,color 0.25s,border-color 0.25s;}
+
+/* APPROACH */
+.approach{background:var(--white);}
+.approach-frame{
+  border:1px solid rgba(184,151,58,0.2);border-radius:4px;
+  overflow:hidden;
+}
+.approach-header{
+  background:var(--charcoal);padding:20px 28px;
+  display:flex;align-items:center;gap:10px;
+}
+.approach-header span{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;}
+.approach-header-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);}
+.steps-row{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+.step-cell{
+  padding:32px 22px;
+  border-right:1px solid rgba(184,151,58,0.12);
+}
+.step-cell:last-child{border-right:none;}
+.step-n{
+  font-family:var(--serif);font-size:36px;font-weight:700;
+  color:rgba(184,151,58,0.18);line-height:1;margin-bottom:14px;
+}
+.step-title{font-size:13px;font-weight:700;color:var(--charcoal);margin-bottom:8px;}
+.step-desc{font-size:12.5px;color:var(--gray-text);line-height:1.65;}
+.step-arrow{
+  font-size:18px;color:var(--gold);text-align:right;
+  margin-top:16px;opacity:0.5;
+}
+
+/* INDUSTRIES */
+.industries{background:var(--charcoal);}
+.industries .section-title{color:var(--white);}
+.industries .section-sub{color:rgba(255,255,255,0.5);}
+.industries-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;
+}
+.ind-pill{
+  border:1px solid rgba(184,151,58,0.2);border-radius:4px;
+  padding:22px 16px;text-align:center;
+  transition:border-color 0.2s,background 0.2s,transform 0.15s;
+  cursor:default;
+}
+.ind-pill:hover{border-color:var(--gold);background:rgba(184,151,58,0.07);transform:translateY(-2px);}
+.ind-pill svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.8;margin-bottom:10px;}
+.ind-pill span{display:block;font-size:12px;font-weight:600;color:rgba(255,255,255,0.75);letter-spacing:0.2px;}
+
+/* WHY US */
+.why{background:var(--off-white);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.why-card{
+  background:var(--white);border:1px solid rgba(184,151,58,0.15);
+  border-radius:4px;padding:32px 28px;
+  transition:border-color 0.2s,transform 0.15s;
+}
+.why-card:hover{border-color:var(--gold);transform:translateY(-2px);}
+.why-num{
+  font-family:var(--serif);font-size:48px;font-weight:700;
+  color:rgba(184,151,58,0.2);line-height:1;margin-bottom:12px;
+}
+.why-card h3{font-size:15px;font-weight:700;color:var(--charcoal);margin-bottom:8px;}
+.why-card p{font-size:13.5px;color:var(--gray-text);line-height:1.7;}
+.why-featured{
+  background:var(--charcoal);border-color:var(--charcoal);
+  grid-column:span 2;
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+}
+.why-featured:hover{border-color:var(--gold);}
+.why-featured h3{
+  font-family:var(--serif);font-size:24px;font-weight:700;
+  color:var(--white);line-height:1.3;margin-bottom:0;
+}
+.promise-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.checklist li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13.5px;color:rgba(255,255,255,0.7);
+}
+.chk{
+  width:20px;height:20px;border-radius:50%;flex-shrink:0;
+  border:1px solid rgba(184,151,58,0.4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--gold);margin-top:1px;
+}
+
+/* CTA */
+.cta-section{
+  background:var(--charcoal);padding:100px 5%;
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-top-rule{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.cta-section h2{
+  font-family:var(--serif);font-size:clamp(32px,4.5vw,56px);
+  font-weight:700;color:var(--white);letter-spacing:-0.5px;
+  margin-bottom:14px;position:relative;
+}
+.cta-section>p{
+  font-size:16px;color:rgba(255,255,255,0.55);
+  max-width:440px;margin:0 auto 48px;line-height:1.75;position:relative;
+}
+.cta-box{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(184,151,58,0.25);
+  border-radius:4px;padding:48px;
+  max-width:540px;margin:0 auto;position:relative;
+}
+.cta-box-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.cta-box h3{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.cta-box>p{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:28px;}
+.cta-form{display:flex;flex-direction:column;gap:12px;}
+.cta-form input,.cta-form select{
+  width:100%;padding:13px 16px;
+  border-radius:4px;border:1px solid rgba(184,151,58,0.2);
+  background:rgba(255,255,255,0.06);color:var(--white);
+  font-size:13.5px;font-family:var(--sans);outline:none;
+  transition:border-color 0.2s;
+}
+.cta-form input::placeholder{color:rgba(255,255,255,0.3);}
+.cta-form input:focus,.cta-form select:focus{border-color:var(--gold);}
+.cta-form select{color:rgba(255,255,255,0.5);}
+.cta-form select option{background:var(--charcoal);color:var(--white);}
+.cta-submit{
+  background:var(--gold);color:var(--charcoal);
+  padding:14px;border-radius:4px;border:none;
+  font-size:14px;font-weight:700;font-family:var(--sans);
+  cursor:pointer;transition:background 0.2s,transform 0.15s;
+  width:100%;letter-spacing:0.3px;
+}
+.cta-submit:hover{background:var(--gold-light);transform:translateY(-1px);}
+.success-msg{
+  display:none;background:rgba(184,151,58,0.1);
+  border:1px solid rgba(184,151,58,0.3);border-radius:4px;
+  padding:18px;color:var(--gold-light);font-size:14px;text-align:center;margin-top:12px;
+}
+
+/* FOOTER */
+footer{background:#131316;padding:52px 5% 28px;}
+.footer-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,0.06);
+  flex-wrap:wrap;gap:32px;
+}
+.f-logo-img{
+  width:40px;height:40px;background:var(--charcoal-2);border:1px solid rgba(184,151,58,0.2);
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:20px;font-weight:700;color:var(--gold);flex-shrink:0;
+}
+.f-logo{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.f-logo-text span:first-child{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--white);display:block;}
+.f-logo-text span:last-child{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;}
+.f-tagline{font-size:12.5px;color:rgba(255,255,255,0.35);max-width:210px;line-height:1.65;}
+.footer-links{display:flex;gap:48px;flex-wrap:wrap;}
+.footer-col h4{font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+.footer-col a{display:block;font-size:12.5px;color:rgba(255,255,255,0.5);text-decoration:none;margin-bottom:8px;transition:color 0.2s;}
+.footer-col a:hover{color:var(--gold);}
+.footer-bottom{
+  padding-top:22px;display:flex;justify-content:space-between;
+  font-size:11px;color:rgba(255,255,255,0.2);flex-wrap:wrap;gap:8px;
+}
+.footer-gold-dot{color:var(--gold);}
+
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .why-grid,.why-featured{grid-template-columns:1fr;}
+  .why-featured{grid-column:span 1;}
+  .steps-row{grid-template-columns:1fr 1fr;}
+  .step-cell:nth-child(2){border-right:none;}
+  .step-cell{border-bottom:1px solid rgba(184,151,58,0.12);}
+  .step-cell:last-child{border-bottom:none;}
+}
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <!-- NAV -->
-<nav id="nav">
-  <a href="#" class="logo">Growth<span>Works</span> Co</a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#outcomes">Outcomes</a></li>
-    <li><a href="#industries">Industries</a></li>
-  </ul>
-  <a href="#cta" class="nav-cta">Book Discovery Call</a>
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-img">GW</div>
+    <div class="nav-logo-text">
+      <span>Growth Works Co</span>
+      <span>Growth · Revenue · Scale</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#approach">Approach</a>
+    <a href="#industries">Industries</a>
+    <a href="#why">Why Us</a>
+    <a href="#contact" class="nav-cta">Schedule a Call</a>
+  </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-grid-lines"></div>
-
-  <div class="hero-left">
-    <div class="hero-eyebrow">
-      <div class="hero-eyebrow-line"></div>
-      <span>Growth Audit & Strategic Consulting</span>
-    </div>
-    <h1 class="hero-headline">
-      We Find What's<br>
-      <em>Holding Back</em><br>
-      Your Growth.
-    </h1>
-    <p class="hero-sub">
-      Independent audits, operational reviews, and marketing intelligence for founders and growing businesses ready to unlock their next stage.
-    </p>
+<section class="hero">
+  <div class="hero-grid-line"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Growth Advisory for Startups</div>
+    <h1>We Help Startups<br>Grow with <em>Clarity</em><br>and Purpose.</h1>
+    <p>Structured growth audits, revenue strategy, and go-to-market execution — built for early-stage founders who are serious about scaling.</p>
     <div class="hero-actions">
-      <a href="#cta" class="btn-primary">
-        Book Free Discovery Call
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="#process" class="btn-ghost">See How It Works</a>
+      <a href="#contact" class="btn-gold">Schedule a Free Call &rarr;</a>
+      <a href="#services" class="btn-outline">Explore our services</a>
     </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="hero-card">
-      <div class="hero-card-label">/ Sample Audit Snapshot</div>
-      <div class="metric-row">
-        <div>
-          <div class="metric-label">Marketing Efficiency</div>
-        </div>
-        <div>
-          <span class="metric-value up">+35%</span>
-          <span class="metric-delta">▲ potential</span>
-        </div>
-      </div>
-      <div class="metric-row">
-        <div>
-          <div class="metric-label">Revenue Leaks Identified</div>
-        </div>
-        <div>
-          <span class="metric-value">7</span>
-          <span class="metric-delta" style="color: var(--gold);">critical</span>
-        </div>
-      </div>
-      <div class="metric-row">
-        <div>
-          <div class="metric-label">Audit Completion</div>
-        </div>
-        <div>
-          <span class="metric-value">14</span>
-          <span class="metric-delta" style="color: var(--muted);">days</span>
-        </div>
-      </div>
-      <div class="metric-row">
-        <div>
-          <div class="metric-label">Funnel Drop-off Points</div>
-        </div>
-        <div>
-          <span class="metric-value up">4</span>
-          <span class="metric-delta" style="color: var(--accent-bright);">mapped</span>
-        </div>
-      </div>
-      <div class="hero-card-footer">
-        <div class="dot"></div>
-        <span>Jaipur, India · growthworksco.in</span>
-      </div>
+    <div class="hero-divider">
+      <div><span class="stat-num">6+</span><span class="stat-label">Service Verticals</span></div>
+      <div><span class="stat-num">D2C · SaaS</span><span class="stat-label">Core Sectors</span></div>
+      <div><span class="stat-num">India-First</span><span class="stat-label">Market Focus</span></div>
     </div>
   </div>
 </section>
-
-<!-- MARQUEE -->
-<div class="marquee-section">
-  <div class="marquee-track" id="marqueeTrack">
-    <div class="marquee-item">Growth Audit <span>✦</span></div>
-    <div class="marquee-item">Marketing Intelligence <span>✦</span></div>
-    <div class="marquee-item">Operational Review <span>✦</span></div>
-    <div class="marquee-item">Revenue Leak Identification <span>✦</span></div>
-    <div class="marquee-item">Strategic Consulting <span>✦</span></div>
-    <div class="marquee-item">CAC Optimization <span>✦</span></div>
-    <div class="marquee-item">Go-To-Market Planning <span>✦</span></div>
-    <div class="marquee-item">Conversion Optimization <span>✦</span></div>
-    <div class="marquee-item">Growth Audit <span>✦</span></div>
-    <div class="marquee-item">Marketing Intelligence <span>✦</span></div>
-    <div class="marquee-item">Operational Review <span>✦</span></div>
-    <div class="marquee-item">Revenue Leak Identification <span>✦</span></div>
-    <div class="marquee-item">Strategic Consulting <span>✦</span></div>
-    <div class="marquee-item">CAC Optimization <span>✦</span></div>
-    <div class="marquee-item">Go-To-Market Planning <span>✦</span></div>
-    <div class="marquee-item">Conversion Optimization <span>✦</span></div>
-  </div>
-</div>
 
 <!-- SERVICES -->
-<section class="services-section" id="services">
-  <div class="services-header reveal">
-    <div>
-      <div class="section-eyebrow">
-        <div class="section-eyebrow-line"></div>
-        <span>What We Do</span>
-      </div>
-      <h2 class="section-title">Four Lenses.<br><em>One Objective.</em></h2>
-    </div>
-    <p class="section-desc">
-      Unlike agencies that profit from your ad spend, we work solely to identify what's limiting your growth — and give you a clear, prioritized roadmap to fix it.
-    </p>
-  </div>
-
-  <div class="services-grid reveal">
+<section class="services" id="services">
+  <div class="section-label">What We Do</div>
+  <div class="section-title">Every Engagement Starts<br>with a Sharp Diagnosis.</div>
+  <div class="section-sub">We don't hand you templates. We go deep into your business, find what's holding you back, and build strategies that fit your actual stage and market.</div>
+  <div class="services-grid">
     <div class="service-card">
-      <div class="service-num">01 /</div>
-      <div class="service-title">Growth Audit</div>
-      <p class="service-desc">A complete diagnostic covering every dimension of your business — from top-of-funnel to retention, from brand to backend.</p>
-      <div class="service-tags">
-        <span class="service-tag">Marketing Performance</span>
-        <span class="service-tag">Acquisition Funnel</span>
-        <span class="service-tag">Conversion</span>
-        <span class="service-tag">Revenue Leaks</span>
-        <span class="service-tag">Customer Journey</span>
-        <span class="service-tag">Competitor Benchmarking</span>
-      </div>
-      <div class="service-deliverable">Full Growth Opportunity Map</div>
+      <div class="s-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <h3>Business Growth Audit</h3>
+      <p>A comprehensive diagnosis of your business model, revenue channels, customer segments, and growth blockers — with a clear prioritized action report.</p>
+      <div class="service-tags"><span class="tag">Business Model</span><span class="tag">PMF</span><span class="tag">Revenue Channels</span></div>
     </div>
-
     <div class="service-card">
-      <div class="service-num">02 /</div>
-      <div class="service-title">Marketing Audit</div>
-      <p class="service-desc">We dissect every channel — paid, organic, content, and social — to surface where your marketing budget is being wasted and what's truly converting.</p>
-      <div class="service-tags">
-        <span class="service-tag">Google Ads</span>
-        <span class="service-tag">Meta Ads</span>
-        <span class="service-tag">SEO</span>
-        <span class="service-tag">Social Media</span>
-        <span class="service-tag">Content</span>
-        <span class="service-tag">Lead Gen</span>
-      </div>
-      <div class="service-deliverable">Prioritized Recommendations Report</div>
+      <div class="s-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+      <h3>Revenue Growth Consulting</h3>
+      <p>Identify and activate revenue levers — new acquisition channels, retention improvements, AOV optimization, and market expansion opportunities.</p>
+      <div class="service-tags"><span class="tag">Acquisition</span><span class="tag">Retention</span><span class="tag">AOV</span></div>
     </div>
-
     <div class="service-card">
-      <div class="service-num">03 /</div>
-      <div class="service-title">Operations Audit</div>
-      <p class="service-desc">Inefficiency is silent and expensive. We identify exactly where your team structure, processes, and systems are costing you time and money.</p>
-      <div class="service-tags">
-        <span class="service-tag">Team Structure</span>
-        <span class="service-tag">Hiring</span>
-        <span class="service-tag">SOPs</span>
-        <span class="service-tag">Productivity</span>
-        <span class="service-tag">Customer Support</span>
-        <span class="service-tag">Sales Process</span>
-      </div>
-      <div class="service-deliverable">Operational Improvement Roadmap</div>
+      <div class="s-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <h3>Growth Funnel Analysis</h3>
+      <p>Map every stage of your customer journey. Identify where you're losing people, why, and what fixes will have the highest impact on conversion.</p>
+      <div class="service-tags"><span class="tag">Funnel</span><span class="tag">Conversion</span><span class="tag">Activation</span></div>
     </div>
-
     <div class="service-card">
-      <div class="service-num">04 /</div>
-      <div class="service-title">Strategic Consulting</div>
-      <p class="service-desc">Work directly with our consultants to build or refine your growth strategy — from go-to-market to community-led growth to creator marketing.</p>
-      <div class="service-tags">
-        <span class="service-tag">Growth Strategy</span>
-        <span class="service-tag">GTM Planning</span>
-        <span class="service-tag">Community</span>
-        <span class="service-tag">Creator Marketing</span>
-        <span class="service-tag">Retention</span>
-        <span class="service-tag">Revenue Growth</span>
-      </div>
-      <div class="service-deliverable">Custom Strategic Roadmap</div>
+      <div class="s-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
+      <h3>Startup Strategy & Advisory</h3>
+      <p>Work directly with founders on GTM strategy, market validation, pricing, customer acquisition, and growth planning tailored to your runway.</p>
+      <div class="service-tags"><span class="tag">GTM</span><span class="tag">Pricing</span><span class="tag">ICP</span></div>
+    </div>
+    <div class="service-card">
+      <div class="s-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <h3>Customer & Market Research</h3>
+      <p>Deep analysis of customer motivations, buying triggers, audience segments, market gaps, and competitive positioning — so you stop guessing.</p>
+      <div class="service-tags"><span class="tag">ICP Research</span><span class="tag">Market Gaps</span><span class="tag">Competitive</span></div>
+    </div>
+    <div class="service-card">
+      <div class="s-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8zM5 19a2 2 0 100-4 2 2 0 000 4zM19 19a2 2 0 100-4 2 2 0 000 4z"/></svg></div>
+      <h3>B2B Growth & Partnerships</h3>
+      <p>Build partnership strategies, explore institutional and corporate sales, and create new revenue channels through strategic collaborations.</p>
+      <div class="service-tags"><span class="tag">Partnerships</span><span class="tag">B2B Sales</span><span class="tag">Channels</span></div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS -->
-<section class="process-section" id="process">
-  <div class="process-header reveal">
-    <div class="section-eyebrow">
-      <div class="section-eyebrow-line"></div>
-      <span>How It Works</span>
+<!-- APPROACH -->
+<section class="approach" id="approach">
+  <div class="section-label">How We Work</div>
+  <div class="section-title">Five Stages from<br>Insight to Impact.</div>
+  <div class="section-sub">A structured engagement model that moves fast without skipping the thinking that matters.</div>
+  <div class="approach-frame">
+    <div class="approach-header">
+      <div class="approach-header-dot"></div>
+      <span>Our Engagement Model</span>
     </div>
-    <h2 class="section-title">From Discovery<br>to <em>Execution</em></h2>
-    <p class="section-desc" style="margin-top: 16px;">A rigorous, structured process that turns complexity into clarity — and findings into results.</p>
-  </div>
-
-  <div class="process-steps reveal">
-    <div class="process-step">
-      <div class="step-num">1</div>
-      <div class="step-title">Discovery</div>
-      <p class="step-desc">We understand your business, goals, challenges, and growth targets in depth.</p>
-    </div>
-    <div class="process-step">
-      <div class="step-num">2</div>
-      <div class="step-title">Deep Dive Analysis</div>
-      <p class="step-desc">We analyze marketing, operations, customer journey, team structure, and growth metrics.</p>
-    </div>
-    <div class="process-step">
-      <div class="step-num">3</div>
-      <div class="step-title">Audit Report</div>
-      <p class="step-desc">Detailed findings: key issues, opportunities, revenue impact, and recommended actions.</p>
-    </div>
-    <div class="process-step">
-      <div class="step-num">4</div>
-      <div class="step-title">Strategy Session</div>
-      <p class="step-desc">A dedicated session to walk through findings and plan your next steps.</p>
-    </div>
-    <div class="process-step">
-      <div class="step-num">5</div>
-      <div class="step-title">Implementation</div>
-      <p class="step-desc">Optional support for executing the roadmap and ongoing growth consulting.</p>
-    </div>
-  </div>
-</section>
-
-<!-- OUTCOMES -->
-<section class="outcomes-section" id="outcomes">
-  <div class="reveal">
-    <div class="section-eyebrow">
-      <div class="section-eyebrow-line"></div>
-      <span>Sample Audit Outcomes</span>
-    </div>
-    <h2 class="section-title">What We've<br><em>Uncovered</em></h2>
-  </div>
-
-  <div class="outcomes-grid reveal">
-    <div class="outcome-card">
-      <div class="outcome-industry">D2C Brand</div>
-      <ul class="outcome-findings">
-        <li>High customer acquisition costs eroding margins</li>
-        <li>Low conversion rates across primary funnel</li>
-        <li>Absent post-purchase retention strategy</li>
-      </ul>
-      <div class="outcome-result">
-        <div class="outcome-result-label">Potential Outcome</div>
-        <div class="outcome-result-text">35% improvement in marketing efficiency identified</div>
+    <div class="steps-row">
+      <div class="step-cell">
+        <div class="step-n">01</div>
+        <div class="step-title">Diagnose</div>
+        <div class="step-desc">Deep-dive into your business. Identify bottlenecks and uncover hidden opportunities.</div>
+        <div class="step-arrow">→</div>
       </div>
-    </div>
-
-    <div class="outcome-card">
-      <div class="outcome-industry">Healthcare Practice</div>
-      <ul class="outcome-findings">
-        <li>Weak lead nurturing leaving prospects cold</li>
-        <li>Poor website conversion architecture</li>
-        <li>Limited local search visibility</li>
-      </ul>
-      <div class="outcome-result">
-        <div class="outcome-result-label">Potential Outcome</div>
-        <div class="outcome-result-text">Significant patient acquisition opportunities surfaced</div>
+      <div class="step-cell">
+        <div class="step-n">02</div>
+        <div class="step-title">Prioritize</div>
+        <div class="step-desc">Focus on the highest-impact moves given your current resources and stage.</div>
+        <div class="step-arrow">→</div>
       </div>
-    </div>
-
-    <div class="outcome-card">
-      <div class="outcome-industry">Early-Stage Startup</div>
-      <ul class="outcome-findings">
-        <li>Critical funnel drop-offs going untracked</li>
-        <li>Team inefficiencies slowing execution</li>
-        <li>Positioning gaps causing customer confusion</li>
-      </ul>
-      <div class="outcome-result">
-        <div class="outcome-result-label">Potential Outcome</div>
-        <div class="outcome-result-text">Clear roadmap toward scalable, repeatable growth</div>
+      <div class="step-cell">
+        <div class="step-n">03</div>
+        <div class="step-title">Strategize</div>
+        <div class="step-desc">Build a practical, phased growth roadmap tailored to your goals and market.</div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step-cell">
+        <div class="step-n">04</div>
+        <div class="step-title">Execute</div>
+        <div class="step-desc">Structured recommendations and advisory support to ensure things get done.</div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step-cell">
+        <div class="step-n">05</div>
+        <div class="step-title">Scale</div>
+        <div class="step-desc">Build repeatable, compounding growth systems for the long run.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- INDUSTRIES -->
-<section class="industries-section" id="industries">
-  <div class="industries-inner">
-    <div>
-      <div class="section-eyebrow reveal">
-        <div class="section-eyebrow-line"></div>
-        <span>Industries</span>
-      </div>
-      <h2 class="section-title reveal">Built for<br><em>Ambitious</em><br>Businesses</h2>
-      <div class="industries-list reveal">
-        <div class="industry-item">
-          <span class="industry-name">Startups</span>
-          <span class="industry-arrow">→</span>
-        </div>
-        <div class="industry-item">
-          <span class="industry-name">D2C Brands</span>
-          <span class="industry-arrow">→</span>
-        </div>
-        <div class="industry-item">
-          <span class="industry-name">Healthcare & Wellness</span>
-          <span class="industry-arrow">→</span>
-        </div>
-        <div class="industry-item">
-          <span class="industry-name">EdTech</span>
-          <span class="industry-arrow">→</span>
-        </div>
-        <div class="industry-item">
-          <span class="industry-name">Consumer Brands</span>
-          <span class="industry-arrow">→</span>
-        </div>
-        <div class="industry-item">
-          <span class="industry-name">Community-Led Businesses</span>
-          <span class="industry-arrow">→</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="industries-visual reveal">
-      <div class="stat-block">
-        <div class="stat-block-num">7–14</div>
-        <div class="stat-block-label">Business days to a complete audit report</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-block-num">100%</div>
-        <div class="stat-block-label">Independent — no ad spend or retainer conflicts</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-block-num">NDA</div>
-        <div class="stat-block-label">Strict confidentiality on all information shared</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-block-num">∞</div>
-        <div class="stat-block-label">Stage-agnostic — idea to growth stage welcome</div>
-      </div>
-    </div>
+<section class="industries" id="industries">
+  <div class="section-label">Industries We Serve</div>
+  <div class="section-title">Built for Founders<br>Across These Sectors.</div>
+  <div class="section-sub">We work with businesses at the intersection of ambition and execution — wherever the growth problem is real.</div>
+  <div class="industries-grid">
+    <div class="ind-pill"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>D2C Brands</span></div>
+    <div class="ind-pill"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.95-1.57l1.65-7.43H6"/></svg><span>E-commerce</span></div>
+    <div class="ind-pill"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>SaaS Companies</span></div>
+    <div class="ind-pill"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg><span>Consumer Products</span></div>
+    <div class="ind-pill"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><span>Hobby & Lifestyle</span></div>
+    <div class="ind-pill"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span>Creator Businesses</span></div>
+    <div class="ind-pill"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg><span>Education</span></div>
+    <div class="ind-pill"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span>Early-Stage Startups</span></div>
   </div>
 </section>
 
-<!-- WHY -->
-<section class="why-section">
-  <div class="reveal">
-    <div class="section-eyebrow">
-      <div class="section-eyebrow-line"></div>
-      <span>Why Growth Works Co</span>
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="section-label">Why Growth Works Co</div>
+  <div class="section-title">We Think Like Operators,<br>Not Consultants.</div>
+  <div class="section-sub">Every recommendation is actionable, revenue-oriented, and built for the constraints you actually have.</div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-num">01</div>
+      <h3>Founder-First Thinking</h3>
+      <p>We understand limited runways, small teams, and high stakes. Our approach is built for founders who need decisions, not decks.</p>
     </div>
-    <h2 class="section-title">Our<br><em>Difference</em></h2>
-  </div>
-
-  <div class="why-grid reveal">
-    <div class="why-item">
-      <div class="why-icon">◇</div>
-      <div class="why-title">Independent & Unbiased</div>
-      <p class="why-desc">Unlike agencies, we don't sell ad spend or marketing retainers. Our recommendations are based solely on what is best for your business — nothing else.</p>
+    <div class="why-card">
+      <div class="why-num">02</div>
+      <h3>Practical Over Theoretical</h3>
+      <p>No 40-slide frameworks you never open. Every deliverable is a clear, prioritized set of actions you can start the next day.</p>
     </div>
-    <div class="why-item">
-      <div class="why-icon">⊕</div>
-      <div class="why-title">Actionable Insights</div>
-      <p class="why-desc">No 100-page reports filled with jargon. You get practical recommendations, prioritized by business impact, that your team can act on immediately.</p>
-    </div>
-    <div class="why-item">
-      <div class="why-icon">↗</div>
-      <div class="why-title">Growth-Focused</div>
-      <p class="why-desc">Every single recommendation is tied back to one objective: revenue growth. We don't optimize for metrics that don't move your business forward.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section" id="faq">
-  <div class="faq-inner">
-    <div>
-      <div class="section-eyebrow reveal">
-        <div class="section-eyebrow-line"></div>
-        <span>FAQ</span>
+    <div class="why-card why-featured">
+      <div>
+        <div class="promise-label">Our Promise</div>
+        <h3>We help you understand what to focus on, what to ignore, where to invest — and how to grow sustainably.</h3>
       </div>
-      <h2 class="section-title reveal">Common<br><em>Questions</em></h2>
-
-      <div class="faq-list reveal">
-        <div class="faq-item">
-          <div class="faq-q">
-            How long does an audit take?
-            <div class="faq-plus"></div>
-          </div>
-          <div class="faq-a">Typically 7–14 business days depending on business complexity and the depth of data we need to analyze. We'll give you a precise timeline during the discovery call.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">
-            Will I need to share confidential information?
-            <div class="faq-plus"></div>
-          </div>
-          <div class="faq-a">Yes. Deep audits require access to real data. All information shared is protected under a strict NDA and confidentiality agreement signed before any work begins.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">
-            Do you implement the recommendations?
-            <div class="faq-plus"></div>
-          </div>
-          <div class="faq-a">Yes. Implementation support is available as a separate engagement. Many clients choose to receive the audit report first, then engage us for execution support on priority items.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">
-            Do you work with early-stage startups?
-            <div class="faq-plus"></div>
-          </div>
-          <div class="faq-a">Absolutely. We work with businesses from the idea stage through growth stage. Early audits often surface the most significant opportunities before bad habits become expensive problems.</div>
-        </div>
-        <div class="faq-item">
-          <div class="faq-q">
-            What makes you different from a marketing agency?
-            <div class="faq-plus"></div>
-          </div>
-          <div class="faq-a">We have no financial incentive tied to your ad spend or channel selection. Our only incentive is to give you an honest, unbiased view of what's working and what isn't — and we put that in writing.</div>
-        </div>
-      </div>
+      <ul class="checklist">
+        <li><span class="chk">✓</span>Revenue-oriented recommendations always</li>
+        <li><span class="chk">✓</span>Startup-friendly, lean execution frameworks</li>
+        <li><span class="chk">✓</span>Data-backed, not assumption-driven</li>
+        <li><span class="chk">✓</span>Stage-aware strategy for where you actually are</li>
+        <li><span class="chk">✓</span>Deep India-first market understanding</li>
+      </ul>
     </div>
-
-    <div class="faq-visual reveal">
-      <div class="faq-card">
-        <div class="faq-card-eyebrow">/ Discovery Call Agenda</div>
-        <h3>Your First 30 Minutes, Structured</h3>
-        <p>The discovery call is free, focused, and structured to give you immediate clarity — even before we begin the audit.</p>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-num">01</div>
-            <div class="timeline-text">Understand your business model, current channels, and key metrics</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-num">02</div>
-            <div class="timeline-text">Identify your primary growth bottleneck and most urgent priorities</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-num">03</div>
-            <div class="timeline-text">Outline the audit scope and what data access we'll need</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-num">04</div>
-            <div class="timeline-text">Agree on timeline, deliverables, and next steps</div>
-          </div>
-        </div>
-        <a href="#cta" class="btn-primary" style="display: inline-flex;">
-          Book Your Call
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
+    <div class="why-card">
+      <div class="why-num">03</div>
+      <h3>Revenue-Oriented by Default</h3>
+      <p>We anchor every recommendation to business impact. Vanity metrics don't interest us unless they drive real revenue.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">04</div>
+      <h3>India-First Market Intelligence</h3>
+      <p>Deep understanding of Indian startup dynamics, Tier 1 & 2 city markets, bootstrapped realities, and the local founder ecosystem.</p>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="cta-section" id="cta">
-  <div class="reveal">
-    <h2 class="cta-title">
-      Ready to Discover What's<br><em>Limiting Your Growth?</em>
-    </h2>
-    <p class="cta-sub">Get a detailed audit and strategic roadmap tailored to your business. The first call is free.</p>
-    <div class="cta-actions">
-      <a href="mailto:hello@growthworksco.in" class="btn-primary">
-        Book Free Discovery Call
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="mailto:hello@growthworksco.in" class="btn-ghost">hello@growthworksco.in</a>
+<section class="cta-section" id="contact">
+  <div class="cta-top-rule"></div>
+  <h2>Ready to Diagnose<br>Your Growth?</h2>
+  <p>A free 45-minute discovery call. No pitch. No fluff. Just a sharp look at your business and what's holding it back.</p>
+  <div class="cta-box">
+    <div class="cta-box-label">Free Discovery Call</div>
+    <h3>Schedule a Call with Us</h3>
+    <p>We'll identify 3 quick wins and share how we can help you grow.</p>
+    <div class="cta-form">
+      <input type="text" id="f-name" placeholder="Your Name"/>
+      <input type="email" id="f-email" placeholder="Email Address"/>
+      <input type="text" id="f-company" placeholder="Company / Startup Name"/>
+      <select id="f-type">
+        <option value="" disabled selected>Type of Business</option>
+        <option>D2C Brand</option>
+        <option>SaaS Company</option>
+        <option>E-commerce</option>
+        <option>Consumer Startup</option>
+        <option>Creator Business</option>
+        <option>Education Business</option>
+        <option>Other</option>
+      </select>
+      <button class="cta-submit" onclick="handleSubmit()">Schedule My Free Call &rarr;</button>
     </div>
-    <p class="cta-contact">Based in Jaipur, India · <a href="https://growthworksco.in">growthworksco.in</a></p>
+    <div class="success-msg" id="success">✦ &nbsp; Thank you — we'll reach out within 24 hours to confirm your call.</div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
-    <div class="footer-brand">
-      <a href="#" class="logo">Growth<span>Works</span> Co</a>
-      <p>We find what's holding back your growth — and give you the roadmap to fix it.</p>
+    <div>
+      <div class="f-logo">
+        <div class="f-logo-img">GW</div>
+        <div class="f-logo-text">
+          <span>Growth Works Co</span>
+          <span>Growth · Revenue · Scale</span>
+        </div>
+      </div>
+      <p class="f-tagline">Helping startups and emerging businesses scale with clarity and purpose.</p>
     </div>
     <div class="footer-links">
-      <h4>Services</h4>
-      <ul>
-        <li><a href="#services">Growth Audit</a></li>
-        <li><a href="#services">Marketing Audit</a></li>
-        <li><a href="#services">Operations Audit</a></li>
-        <li><a href="#services">Strategic Consulting</a></li>
-      </ul>
-    </div>
-    <div class="footer-links">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="#process">Our Process</a></li>
-        <li><a href="#outcomes">Case Studies</a></li>
-        <li><a href="#industries">Industries</a></li>
-        <li><a href="#faq">FAQ</a></li>
-      </ul>
-    </div>
-    <div class="footer-links">
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="mailto:hello@growthworksco.in">hello@growthworksco.in</a></li>
-        <li><a href="https://growthworksco.in">growthworksco.in</a></li>
-        <li><a href="#cta">Book a Call</a></li>
-      </ul>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#services">Growth Audit</a>
+        <a href="#services">Revenue Consulting</a>
+        <a href="#services">Funnel Analysis</a>
+        <a href="#services">Startup Advisory</a>
+        <a href="#services">B2B Partnerships</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#approach">Our Approach</a>
+        <a href="#industries">Industries</a>
+        <a href="#why">Why Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="#">LinkedIn</a>
+        <a href="#">Twitter / X</a>
+        <a href="mailto:hello@growthworksco.in">hello@growthworksco.in</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Growth Works Co. Jaipur, India.</p>
-    <p>All information shared is protected under strict <a href="#">NDA & Confidentiality</a>.</p>
+    <span>&copy; 2025 Growth Works Co <span class="footer-gold-dot">·</span> All rights reserved.</span>
+    <span>growthworksco.in</span>
   </div>
 </footer>
 
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
+function handleSubmit(){
+  var n=document.getElementById('f-name').value.trim();
+  var e=document.getElementById('f-email').value.trim();
+  var c=document.getElementById('f-company').value.trim();
+  var t=document.getElementById('f-type').value;
+  if(!n||!e||!c||!t){alert('Please fill in all fields.');return;}
+  document.querySelector('.cta-form').style.display='none';
+  document.getElementById('success').style.display='block';
+}
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
   });
-
-  function animateRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  document.querySelectorAll('a, button, .service-card, .industry-item, .faq-q').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      ring.style.width = '60px';
-      ring.style.height = '60px';
-      ring.style.borderColor = 'rgba(200,169,110,0.8)';
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.style.width = '36px';
-      ring.style.height = '36px';
-      ring.style.borderColor = 'rgba(200,169,110,0.5)';
-    });
-  });
-
-  // Nav scroll
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(r => observer.observe(r));
-
-  // FAQ accordion
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.parentElement;
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
-  });
-
-  // Smooth scroll for nav links
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
+});
 </script>
 </body>
 </html>
